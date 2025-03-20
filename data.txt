@@ -1,0 +1,40 @@
+# Atributos para os conjuntos de dados student-mat.csv (curso de matemática) e student-por.csv (curso de língua portuguesa):
+1 school - escola do aluno (binário: "GP" - Gabriel Pereira ou "MS" - Mousinho da Silveira)
+2 sex - sexo do aluno (binário: "F" - feminino ou "M" - masculino)
+3 age - idade do aluno (numérico: de 15 a 22)
+4 address - tipo de endereço residencial do aluno (binário: "U" - urbano ou "R" - rural)
+5 famsize - tamanho da família (binário: "LE3" - menor ou igual a 3 ou "GT3" - maior que 3)
+6 Pstatus - status de coabitação dos pais (binário: "T" - vivendo juntos ou "A" - separados)
+7 Medu - educação da mãe (numérico: 0 - nenhum, 1 - ensino fundamental (4ª série), 2ª - 5ª a 9ª série grau, 3 – ensino médio ou 4 – ensino superior)
+8 Fedu - educação do pai (numérico: 0 - nenhuma, 1 - ensino fundamental (4ª série), 2 – 5ª a 9ª série, 3 – ensino médio ou 4 – ensino superior)
+9 Mjob - emprego da mãe (nominal: "professor", "saúde" relacionado a cuidados, "serviços" civis (por exemplo, administrativo ou policial), "em casa" ou "outro")
+10 Fjob - emprego do pai (nominal: "professor", "saúde" relacionado a cuidados, "serviços" civis (por exemplo, administrativo ou policial), "em casa" ou "outro")
+11 motivo - motivo para escolher esta escola (nominal: perto de "casa", "reputação" da escola, preferência de "curso" ou "outro")
+12 tutor - tutor do aluno (nominal: "mãe", "pai" ou "outro")
+13 tempo de viagem - tempo de viagem de casa para a escola (numérico: 1 - <15 min., 2 - 15 a 30 min., 3 - 30 min. a 1 hora ou 4 - >1 hora)
+14 tempo de estudo - tempo de estudo semanal (numérico: 1 - <2 horas, 2 - 2 a 5 horas, 3 - 5 a 10 horas ou 4 - >10 horas)
+15 reprovações - número de reprovações de classe anteriores (numérico: n se 1<=n<3, senão 4)
+16 schoolsup - suporte educacional extra (binário: sim ou não)
+17 famsup - suporte educacional familiar (binário: sim ou nó)
+18 pago - aulas extras pagas dentro da disciplina do curso (Matemática ou Português) (binário: sim ou não)
+19 atividades - atividades extracurriculares (binário: sim ou não)
+20 creche - frequentou creche (binário: sim ou não)
+21 superior - quer fazer ensino superior (binário: sim ou não)
+22 internet - acesso à Internet em casa (binário: sim ou não)
+23 romântico - com um relacionamento romântico (binário: sim ou não)
+24 famrel - qualidade dos relacionamentos familiares (numérico: de 1 - muito ruim a 5 - excelente)
+25 freetime - tempo livre depois da escola (numérico: de 1 - muito baixo a 5 - muito alto)
+26 goout - sair com amigos (numérico: de 1 - muito baixo a 5 - muito alto)
+27 Dalc - consumo de álcool durante o dia de trabalho (numérico: de 1 - muito baixo a 5 - muito alto)
+28 Walc - consumo de álcool no fim de semana (numérico: de 1 - muito baixo a 5 - muito alto)
+29 saúde - estado de saúde atual (numérico: de 1 - muito ruim a 5 - muito bom)
+30 ausências - número de faltas escolares (numérico: de 0 a 93)
+
+# essas notas estão relacionadas com a disciplina do curso, matemática ou português:
+31 G1 - nota do primeiro período (numérico: de 0 a 20)
+31 G2 - nota do segundo período (numérico: de 0 a 20)
+32 G3 - nota final (numérico: de 0 a 20, meta de saída)
+
+Nota adicional: há vários (382) alunos que pertencem a ambos os conjuntos de dados.
+Esses alunos podem ser identificados pela busca de atributos idênticos
+que caracterizam cada aluno, conforme mostrado no arquivo R em anexo.
