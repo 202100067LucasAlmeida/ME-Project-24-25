@@ -62,18 +62,22 @@ amostra <- nrow(dados)
 # Descrição: Escola que o aluno frequenta.
 # Dados estatísticos: "GP" - Gabriel Pereira, "MS" - Mousinho da Silveira
 # Classificação: Qualitativa Nominal
+estudantes$escola
 
 # Variável estatística: estudo_semanal
 # Descrição: Número de horas de estudo semanais dos alunos.
 # Dados estatísticos: 1 - <2 horas, 2 - 2 a 5 horas, 3 - 5 a 10 horas, 4 - >10 horas
 # Classificação: Qualitativa Ordinal
+estudantes$estudo_semanal
 
 # Variável estatística: num_faltas
 # Descrição: Número de faltas escolares dos alunos.
 # Dados estatísticos: de 0 a 93
 # Classificação: Quantitativa Discreta
+estudantes$num_faltas
 
 # Variável estatística: nota_final
 # Descrição: Nota final dos alunos.
 # Dados estatísticos: de 0 a 20 
 # Classificação: Quantitativa Contínua
+estudantes$nota_final
