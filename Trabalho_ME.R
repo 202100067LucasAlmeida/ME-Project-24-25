@@ -23,7 +23,7 @@
 # Recolha da base de dados
 dados <- read.csv("D:/Lucas Alexandre/IPS/ME-Project-24-25/data.csv", sep= ";", header = TRUE)
 dados <- read.csv("C:/Users/diana/Desktop/IPS/LEI/2ºANO/2ºSEMESTRE/ME/PROJETO/ME-Project-24-25/data.csv", sep=";", header = TRUE)
-# dados <- read.csv("caminho-pc-rita", sep=";", header = TRUE)
+dados <- read.csv("/Users/rita/Documents/IPS/3ºano/2º\ semestre/ME/trabalho/ME-Project-24-25/data.csv", sep=";", header = TRUE)
 
 escola <- dados$school
 estudo_semanal <- dados$studytime
@@ -77,3 +77,4 @@ amostra <- nrow(dados)
 # Descrição: Nota final dos alunos.
 # Dados estatísticos: de 0 a 20 
 # Classificação: Quantitativa Contínua
+
