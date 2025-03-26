@@ -22,7 +22,7 @@
 
 # Recolha da base de dados
 dados <- read.csv("D:/Lucas Alexandre/IPS/ME-Project-24-25/data.csv", sep= ";", header = TRUE)
-# dados <- read.csv("caminho-pc-diana", sep=";", header = TRUE)
+dados <- read.csv("C:/Users/diana/Desktop/IPS/LEI/2ºANO/2ºSEMESTRE/ME/PROJETO/ME-Project-24-25/data.csv", sep=";", header = TRUE)
 # dados <- read.csv("caminho-pc-rita", sep=";", header = TRUE)
 
 escola <- dados$school
