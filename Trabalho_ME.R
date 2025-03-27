@@ -21,6 +21,10 @@
 ###################
 
 # Recolha da base de dados
+
+# Fonte: https://archive.ics.uci.edu/dataset/320/student+performance
+# Site recomendado no enunciado do trabalho.
+
 dados <- read.csv("D:/Lucas Alexandre/IPS/ME-Project-24-25/data.csv", sep= ";", header = TRUE)
 # dados <- read.csv("C:/Users/diana/Desktop/IPS/LEI/2ºANO/2ºSEMESTRE/ME/PROJETO/ME-Project-24-25/data.csv", sep=";", header = TRUE)
 # dados <- read.csv("/Users/rita/Documents/IPS/3ºano/2º\ semestre/ME/trabalho/ME-Project-24-25/data.csv", sep=";", header = TRUE)
@@ -35,6 +39,9 @@ estudantes <- data.frame(aluno=c(1:nrow(dados)),
                          estudo_semanal,
                          num_faltas,
                          nota_final)
+# Sem valores omissos.
+is.na(estudantes) 
+
 #######################
 ###                 ###
 ## Análise dos dados ##
@@ -82,3 +89,14 @@ estudantes$num_faltas
 # Dados estatísticos: de 0 a 20 
 # Classificação: Quantitativa Contínua
 estudantes$nota_final
+
+###############################################################
+###############################################################
+###############################################################
+
+###################
+######       ######
+##### 2° Fase #####
+######       ######
+###################
+
