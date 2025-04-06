@@ -26,9 +26,10 @@
 # Site recomendado no enunciado do trabalho.
 
 dados <- read.csv("D:/Lucas Alexandre/IPS/ME-Project-24-25/data.csv", sep= ";", header = TRUE)
-# dados <- read.csv("C:/Users/diana/Desktop/IPS/LEI/2ºANO/2ºSEMESTRE/ME/PROJETO/ME-Project-24-25/data.csv", sep=";", header = TRUE)
- dados <- read.csv("/Users/rita/Documents/IPS/3ºano/2º\ semestre/ME/trabalho/ME-Project-24-25/data.csv", sep=";", header = TRUE)
- 
+dados <- read.csv("C:/Users/diana/Desktop/IPS/LEI/2ºANO/2ºSEMESTRE/ME/PROJETO/ME-Project-24-25/data.csv", sep=";", header = TRUE)
+dados <- read.csv("/Users/rita/Documents/IPS/3ºano/2º\ semestre/ME/trabalho/ME-Project-24-25/data.csv", sep=";", header = TRUE)
+
+# Variáveis escolhidas da base de dados original 
 escola <- dados$school
 idade <- dados$age
 estudo_semanal <- dados$studytime
@@ -36,6 +37,7 @@ aulas_extras_pagas <- dados$paid
 num_faltas <- dados$absences
 nota_final <- dados$G3
 
+# Nova tabela a partir das variáveis escolhidas
 estudantes <- data.frame(aluno=c(1:nrow(dados)), 
                          escola,
                          idade,
@@ -43,6 +45,7 @@ estudantes <- data.frame(aluno=c(1:nrow(dados)),
                          aulas_extras_pagas,
                          num_faltas,
                          nota_final)
+
 # Sem valores omissos.
 is.na(estudantes) 
 
@@ -52,7 +55,7 @@ is.na(estudantes)
 ###                 ###
 #######################
 
-# Nosso trabalho irá abordar um estudo do desempenho dos alunos em matemática 
+# O nosso trabalho irá abordar um estudo do desempenho dos alunos em matemática 
 # no ensino secundário de duas escolas portuguesas.
 
 # População:
@@ -134,29 +137,6 @@ tabela.frequencia.escola <- data.frame(i=c(1,nrow(ni.e)),
                                        ni = as.integer(ni.e),
                                        fi = round(as.numeric(fi.e),4))
 
-# Variável: idade
-k.i = 4 # 4 classes
-h.i = 2 # amplitude de 2 anos
-
-valor.min.i  = 15
-valor.max.i = valor.min.i + k.i*h.i
-
-cortes.idade = seq(valor.min.i, valor.max.i, by=h.i)
-
-classe.idade <- cut(estudantes$idade, breaks = cortes.idade, right = FALSE, include.lowest = TRUE)
-
-ni.i = table(classe.idade)
-fi.i = prop.table(ni.i)
-Ni.i = cumsum(ni.i)
-Fi.i = cumsum(fi.i)
-
-tabela.frequencia.idade <- data.frame(i=c(1:nrow(ni.i)),
-                                  classe = names(ni.i),
-                                  ni = as.integer(ni.i),
-                                  fi = round(as.numeric(fi.i),4),
-                                  Ni = as.integer(Ni.i),
-                                  Fi = round(as.numeric(Fi.i),4))
-
 
 # Variável: estudo_semanal
 ni.es <- table(estudantes$estudo_semanal) #frequência absoluta
@@ -176,6 +156,31 @@ tabela.frequencia.aulas_extras_pagas <- data.frame(i = 1:length(ni.aep),
                                                    xi = names(ni.aep),
                                                    ni = as.integer(ni.aep),
                                                    fi = round(as.numeric(fi.aep), 4))
+
+# Tabelas de frequências que necessitam de criação de classes
+
+# Variável: idade
+k.i = 4 # 4 classes
+h.i = 2 # amplitude de 2 anos
+
+valor.min.i  = 15
+valor.max.i = valor.min.i + k.i*h.i
+
+cortes.idade = seq(valor.min.i, valor.max.i, by=h.i)
+
+classe.idade <- cut(estudantes$idade, breaks = cortes.idade, right = FALSE, include.lowest = TRUE)
+
+ni.i = table(classe.idade)
+fi.i = prop.table(ni.i)
+Ni.i = cumsum(ni.i)
+Fi.i = cumsum(fi.i)
+
+tabela.frequencia.idade <- data.frame(i=c(1:nrow(ni.i)),
+                                      classe = names(ni.i),
+                                      ni = as.integer(ni.i),
+                                      fi = round(as.numeric(fi.i),4),
+                                      Ni = as.integer(Ni.i),
+                                      Fi = round(as.numeric(Fi.i),4))
 
 
 # Variável: num_faltas
@@ -234,3 +239,41 @@ tabela.frequencia.nota_final <- data.frame(i = c(1:nrow(ni.n)),
                                            Fi = round(as.numeric(Fi.n), 4))
 
 
+# Gráficos
+
+# Variável: escola
+# Tipo de gráfico: circular
+
+pie(ni.e, 
+    labels=paste(ni.e),  
+    col=rainbow(length(ni.e)), 
+    main="Frequências absolutas das Escolas")
+
+legend("topleft", 
+       legend=c("GP - Gabriel Pereira", "MS - Mousinho da Silveira"), 
+       fill=rainbow(length(ni.e)))
+
+# Variável: estudo semanal
+# Tipo de gráfico: barras
+
+barplot(ni.es, 
+        xlab="Horas", 
+        ylab="Frequências absolutas", 
+        main="Classificação do estudo semanal",
+        col=c("red", "yellow", "blue", "green"), 
+        yaxt="n")
+
+axis(side=2, at=c(0,ni.es))
+
+
+# Variável: aulas extra
+# Tipo de gráfico: circular
+
+pie(ni.aep, 
+    labels=paste(ni.aep),  
+    col=rainbow(length(ni.aep)), 
+    main="Frequências absolutas das aulas extra pagas")
+
+legend("topleft", 
+       legend=c("Não", "Sim"), 
+       fill=rainbow(length(ni.aep)))
