@@ -27,7 +27,7 @@
 
 dados <- read.csv("D:/Lucas Alexandre/IPS/ME-Project-24-25/data.csv", sep= ";", header = TRUE)
 # dados <- read.csv("C:/Users/diana/Desktop/IPS/LEI/2ºANO/2ºSEMESTRE/ME/PROJETO/ME-Project-24-25/data.csv", sep=";", header = TRUE)
-# dados <- read.csv("/Users/rita/Documents/IPS/3ºano/2º\ semestre/ME/trabalho/ME-Project-24-25/data.csv", sep=";", header = TRUE)
+ dados <- read.csv("/Users/rita/Documents/IPS/3ºano/2º\ semestre/ME/trabalho/ME-Project-24-25/data.csv", sep=";", header = TRUE)
  
 escola <- dados$school
 idade <- dados$age
@@ -156,4 +156,81 @@ tabela.frequencia.idade <- data.frame(i=c(1:nrow(ni.i)),
                                   fi = round(as.numeric(fi.i),4),
                                   Ni = as.integer(Ni.i),
                                   Fi = round(as.numeric(Fi.i),4))
+
+
+# Variável: estudo_semanal
+ni.es <- table(estudantes$estudo_semanal) #frequência absoluta
+fi.es <- prop.table(ni.es) #frequência relativa
+
+tabela.frequencia.estudo_semanal <- data.frame(i = 1:length(ni.es),
+                                               xi = names(ni.es),
+                                               ni = as.integer(ni.es),
+                                               fi = round(as.numeric(fi.es), 4))
+
+
+# Variável: aulas_extra_pagas
+ni.aep <- table(estudantes$aulas_extras_pagas) #frequência absoluta
+fi.aep <- prop.table(ni.aep) #frequência relativa
+
+tabela.frequencia.aulas_extras_pagas <- data.frame(i = 1:length(ni.aep),
+                                                   xi = names(ni.aep),
+                                                   ni = as.integer(ni.aep),
+                                                   fi = round(as.numeric(fi.aep), 4))
+
+
+# Variável: num_faltas
+
+k.f = 10 # 10 classes
+h.f = 10 # amplitude de 10 faltas
+
+valor.min.f = 0
+valor.max.f = valor.min.f + k.f * h.f
+
+cortes.faltas = seq(valor.min.f, valor.max.f, by = h.f)
+
+classe.faltas <- cut(estudantes$num_faltas,
+                     breaks = cortes.faltas,
+                     right = FALSE,
+                     include.lowest = TRUE) 
+
+ni.f = table(classe.faltas)
+fi.f = prop.table(ni.f)
+Ni.f = cumsum(ni.f)
+Fi.f = cumsum(fi.f)
+
+tabela.frequencia.num_faltas <- data.frame(i = c(1:nrow(ni.f)),
+                                           classe = names(ni.f),
+                                           ni = as.integer(ni.f),
+                                           fi = round(as.numeric(fi.f), 4),
+                                           Ni = as.integer(Ni.f),
+                                           Fi = round(as.numeric(Fi.f), 4))
+
+
+# Variável: nota_final
+
+k.n = 5  # 5 classes
+h.n = 4  # amplitude de 4 valores
+
+valor.min.n = 0
+valor.max.n = valor.min.n + k.n * h.n 
+
+cortes.nota = seq(valor.min.n, valor.max.n, by = h.n)
+
+classe.nota <- cut(estudantes$nota_final,
+                   breaks = cortes.nota,
+                   right = FALSE, 
+                   include.lowest = TRUE) 
+
+ni.n = table(classe.nota)
+fi.n = prop.table(ni.n)
+Ni.n = cumsum(ni.n)
+Fi.n = cumsum(fi.n)
+
+tabela.frequencia.nota_final <- data.frame(i = c(1:nrow(ni.n)),
+                                           classe = names(ni.n),
+                                           ni = as.integer(ni.n),
+                                           fi = round(as.numeric(fi.n), 4),
+                                           Ni = as.integer(Ni.n),
+                                           Fi = round(as.numeric(Fi.n), 4))
+
 
