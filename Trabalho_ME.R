@@ -160,17 +160,20 @@ tabela.frequencia.aulas_extras_pagas <- data.frame(i = 1:length(ni.aep),
 # Tabelas de frequências que necessitam de criação de classes
 
 # Variável: idade
-k.i = 4 # 4 classes
-h.i = 2 # amplitude de 2 anos
+(min(estudantes$idade)) # Verificar o min dos dados
+(max(estudantes$idade)) # Verificar o max dos dados
 
-valor.min.i  = 15
-valor.max.i = valor.min.i + k.i*h.i
+k.i = 3 # Número de classes
+h.i = 3 # Amplitude das classes
+
+valor.min.i  = 14 # Mınimo da primeira classe -> 14
+valor.max.i = valor.min.i + k.i*h.i # Maximo da ´ultima classe -> 23
 
 cortes.idade = seq(valor.min.i, valor.max.i, by=h.i)
 
-classe.idade <- cut(estudantes$idade, breaks = cortes.idade, right = FALSE, include.lowest = TRUE)
+classes.idade <- cut(estudantes$idade, breaks = cortes.idade, right = FALSE, include.lowest = TRUE)
 
-ni.i = table(classe.idade)
+ni.i = table(classes.idade)
 fi.i = prop.table(ni.i)
 Ni.i = cumsum(ni.i)
 Fi.i = cumsum(fi.i)
