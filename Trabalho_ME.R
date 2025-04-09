@@ -217,20 +217,25 @@ tabela.frequencia.num_faltas <- data.frame(i = c(1:nrow(ni.f)),
 
 # Variável: nota_final
 
-k.n = 5  # 5 classes
-h.n = 4  # amplitude de 4 valores
+estudantes$nota_final_2 = (((dados$G1)+(dados$G2))/2) # Criamos novos valores por questões de ter variedade de dados
 
-valor.min.n = 0
-valor.max.n = valor.min.n + k.n * h.n 
+(min(estudantes$nota_final_2)) # Verificar o min dos dados
+(max(estudantes$nota_final_2)) # Verificar o max dos dados
 
-cortes.nota = seq(valor.min.n, valor.max.n, by = h.n)
+k.nf = 4 # Número de classes
+h.nf = 5 # Amplitude das classes
 
-classe.nota <- cut(estudantes$nota_final,
-                   breaks = cortes.nota,
+valor.min.nf  = 0 # Mınimo da primeira classe -> 0
+(valor.max.nf = valor.min.nf + k.nf*h.nf) # Maximo da ´ultima classe -> 20
+
+cortes.nota.final = seq(valor.min.nf, valor.max.nf, by = h.nf)
+
+classes.nota.final <- cut(estudantes$nota_final_2,
+                   breaks = cortes.nota.final,
                    right = FALSE, 
                    include.lowest = TRUE) 
 
-ni.n = table(classe.nota)
+ni.n = table(classes.nota.final)
 fi.n = prop.table(ni.n)
 Ni.n = cumsum(ni.n)
 Fi.n = cumsum(fi.n)
@@ -281,3 +286,4 @@ pie(ni.aep,
 legend("topleft", 
        legend=c("Não", "Sim"), 
        fill=rainbow(length(ni.aep)))
+
