@@ -287,3 +287,56 @@ legend("topleft",
        legend=c("Não", "Sim"), 
        fill=rainbow(length(ni.aep)))
 
+
+# Variável: idade
+# Tipo de gráfico: histograma
+
+hist(x=estudantes$idade, 
+     breaks=cortes.idade,
+     right=TRUE, 
+     include.lowest=TRUE,
+     freq=TRUE, 
+     main="Histograma da Idade",
+     xlab="Idade dos alunos",
+     ylab="frequências absolutas",
+     col="yellow",
+     ylim=c(0,300),
+     xaxt="n")
+
+axis(side = 1, at=c(0, round(cortes.idade,1)))
+
+
+# Variável: número de faltas
+# Tipo de gráfico: histograma
+
+hist(x=estudantes$num_faltas, 
+     breaks=cortes.faltas,
+     right=TRUE, 
+     include.lowest=TRUE,
+     freq=TRUE, 
+     main="Histograma do número de faltas",
+     xlab="Número de faltas",
+     ylab="frequências absolutas",
+     col="red",
+     ylim=c(0,300),
+     xaxt="n")
+
+axis(side = 1, at=c(0, round(cortes.faltas,1)))
+
+
+# Variável: nota final
+# Tipo de gráfico: histograma
+
+hist(x=estudantes$nota_final_2, 
+     breaks=cortes.nota.final,
+     right=TRUE, 
+     include.lowest=TRUE,
+     freq=TRUE, 
+     main="Histograma da nota final",
+     xlab="Nota final",
+     ylab="frequências absolutas",
+     col="blue",
+     ylim=c(0,200),
+     xaxt="n")
+
+axis(side = 1, at=c(0, round(cortes.nota.final,1)))
