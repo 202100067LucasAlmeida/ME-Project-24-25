@@ -188,20 +188,21 @@ tabela.frequencia.idade <- data.frame(i=c(1:nrow(ni.i)),
 
 # Variável: num_faltas
 
-k.f = 10 # 10 classes
-h.f = 10 # amplitude de 10 faltas
+# Regra de Sturges
 
-valor.min.f = 0
-valor.max.f = valor.min.f + k.f * h.f
+(k.f = trunc(1+log(amostra)/log(2))) # Número de classes -> 9
+(h.f = (max(estudantes$num_faltas)-min(estudantes$num_faltas))/k.f) # Amplitude das classes
+(min.classe.f = min(estudantes$num_faltas)) # Inicio da primeira classe
+(max.classe.f = min.classe.f + h.f * k.f) # Fim da última classe
 
-cortes.faltas = seq(valor.min.f, valor.max.f, by = h.f)
+cortes.faltas = seq(min.classe.f, max.classe.f, by = h.f)
 
-classe.faltas <- cut(estudantes$num_faltas,
+classes.faltas <- cut(estudantes$num_faltas,
                      breaks = cortes.faltas,
                      right = FALSE,
                      include.lowest = TRUE) 
 
-ni.f = table(classe.faltas)
+ni.f = table(classes.faltas)
 fi.f = prop.table(ni.f)
 Ni.f = cumsum(ni.f)
 Fi.f = cumsum(fi.f)
