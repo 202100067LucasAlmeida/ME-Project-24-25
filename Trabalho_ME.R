@@ -212,13 +212,12 @@ estudantes$nota_final_2 = (((dados$G1)+(dados$G2))/2) # Criamos novos valores po
 (min(estudantes$nota_final_2)) # Verificar o min dos dados
 (max(estudantes$nota_final_2)) # Verificar o max dos dados
 
-k.nf = 4 # Número de classes
-h.nf = 5 # Amplitude das classes
+(k.nf = trunc(1+log(amostra)/log(2))) # Número de classes -> 9
+(h.nf = (max(estudantes$nota_final_2)-min(estudantes$nota_final_2))/k.nf) # Amplitude das classes
+(min.classe.nf = min(estudantes$nota_final_2)) # Inicio da primeira classe
+(max.classe.nf = min.classe.nf + h.nf * k.nf) # Fim da última classe
 
-valor.min.nf  = 0 # Mınimo da primeira classe -> 0
-(valor.max.nf = valor.min.nf + k.nf*h.nf) # Maximo da ´ultima classe -> 20
-
-cortes.nota.final = seq(valor.min.nf, valor.max.nf, by = h.nf)
+cortes.nota.final = seq(min.classe.nf, max.classe.nf, by = h.nf)
 
 classes.nota.final <- cut(estudantes$nota_final_2,
                    breaks = cortes.nota.final,
