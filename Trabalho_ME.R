@@ -283,7 +283,7 @@ barplot(ni.i,
         xlab="Idade (em anos)", 
         ylab="Frequências absolutas", 
         main="Idade dos alunos",
-        col=rainbow(ni.id), 
+        col=rainbow(ni.i), 
         yaxt="n")
 
 axis(side=2, at=c(0,ni.i))
@@ -322,3 +322,13 @@ hist(x=estudantes$nota_final_2,
      xaxt="n")
 
 axis(side = 1, at=c(0, round(cortes.nota.final,1)))
+
+###############################################################
+###############################################################
+###############################################################
+
+###################
+######       ######
+##### 3° Fase #####
+######       ######
+###################
