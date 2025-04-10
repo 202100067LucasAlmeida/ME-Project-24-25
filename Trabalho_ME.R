@@ -141,11 +141,15 @@ tabela.frequencia.escola <- data.frame(i=c(1,nrow(ni.e)),
 # Variável: estudo_semanal
 ni.es <- table(estudantes$estudo_semanal) #frequência absoluta
 fi.es <- prop.table(ni.es) #frequência relativa
+Ni.es <- cumsum(ni.es)
+Fi.es <- round(cumsum(fi.es),4)
 
 tabela.frequencia.estudo_semanal <- data.frame(i = 1:length(ni.es),
-                                               xi = names(ni.es),
+                                               xi = c("<2h", "entre 2 e 5 h", "entre 5 e 10 h", ">10h"),
                                                ni = as.integer(ni.es),
-                                               fi = round(as.numeric(fi.es), 4))
+                                               fi = round(as.numeric(fi.es), 4),
+                                               Ni = as.integer(Ni.es),
+                                               Fi = as.numeric(Fi.es))
 
 
 # Variável: aulas_extra_pagas
@@ -160,31 +164,17 @@ tabela.frequencia.aulas_extras_pagas <- data.frame(i = 1:length(ni.aep),
 # Tabelas de frequências que necessitam de criação de classes
 
 # Variável: idade
-(min(estudantes$idade)) # Verificar o min dos dados
-(max(estudantes$idade)) # Verificar o max dos dados
+ni.i = table(estudantes$idade)
+fi.i = prop.table(ni.id)
+Ni.i = cumsum(ni.id)
+Fi.i = round(cumsum(fi.id), 4)
 
-k.i = 3 # Número de classes
-h.i = 3 # Amplitude das classes
-
-valor.min.i  = 14 # Mınimo da primeira classe -> 14
-valor.max.i = valor.min.i + k.i*h.i # Maximo da ´ultima classe -> 23
-
-cortes.idade = seq(valor.min.i, valor.max.i, by=h.i)
-
-classes.idade <- cut(estudantes$idade, breaks = cortes.idade, right = FALSE, include.lowest = TRUE)
-
-ni.i = table(classes.idade)
-fi.i = prop.table(ni.i)
-Ni.i = cumsum(ni.i)
-Fi.i = cumsum(fi.i)
-
-tabela.frequencia.idade <- data.frame(i=c(1:nrow(ni.i)),
-                                      classe = names(ni.i),
-                                      ni = as.integer(ni.i),
-                                      fi = round(as.numeric(fi.i),4),
-                                      Ni = as.integer(Ni.i),
-                                      Fi = round(as.numeric(Fi.i),4))
-
+tabela.frequencia.idade <- data.frame(i=c(1:length(ni.i)),
+                                   xi = names(ni.i),
+                                   ni = as.integer(ni.i),
+                                   fi = as.numeric(fi.i),
+                                   Ni = as.integer(Ni.i),
+                                   Fi = as.numeric(Fi.i))
 
 # Variável: num_faltas
 
@@ -274,7 +264,6 @@ barplot(ni.es,
 
 axis(side=2, at=c(0,ni.es))
 
-
 # Variável: aulas extra
 # Tipo de gráfico: circular
 
@@ -289,22 +278,16 @@ legend("topleft",
 
 
 # Variável: idade
-# Tipo de gráfico: histograma
+# Tipo de gráfico: barras
 
-hist(x=estudantes$idade, 
-     breaks=cortes.idade,
-     right=TRUE, 
-     include.lowest=TRUE,
-     freq=TRUE, 
-     main="Histograma da Idade",
-     xlab="Idade dos alunos",
-     ylab="frequências absolutas",
-     col="yellow",
-     ylim=c(0,300),
-     xaxt="n")
+barplot(ni.i, 
+        xlab="Idade (em anos)", 
+        ylab="Frequências absolutas", 
+        main="Idade dos alunos",
+        col=rainbow(ni.id), 
+        yaxt="n")
 
-axis(side = 1, at=c(0, round(cortes.idade,1)))
-
+axis(side=2, at=c(0,ni.i))
 
 # Variável: número de faltas
 # Tipo de gráfico: histograma
