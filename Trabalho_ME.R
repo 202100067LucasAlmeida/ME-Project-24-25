@@ -333,7 +333,7 @@ axis(side = 1, at=c(0, round(cortes.nota.final,1)))
 ######       ######
 ###################
 
-####### Medidas estatisicas oara age, absences e G3
+####### Medidas estatisicas para age, absences e G3
 
 summary(dados[c("age", "absences", "G3")])
 sd(dados$age)
@@ -349,3 +349,16 @@ moda <- function(x) {
 moda(dados$age)
 moda(dados$absences)
 moda(dados$G3)
+
+##### por escola
+aggregate(cbind(age, absences, G3) ~ school, data = dados, 
+          FUN = function(x) c(media = mean(x), mediana = median(x), maximo = max(x)))
+
+##### por aulas extra pagas
+aggregate(cbind(age, absences, G3) ~ paid, data = dados, 
+          FUN = function(x) c(media = mean(x), mediana = median(x), maximo = max(x)))
+
+
+##### por tempo de estudo
+aggregate(cbind(absences, G3) ~ studytime, data = dados, 
+          FUN = function(x) c(media = mean(x), mediana = median(x), maximo = max(x)))
