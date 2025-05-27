@@ -333,7 +333,39 @@ axis(side = 1, at=c(0, round(cortes.nota.final,1)))
 ######       ######
 ###################
 
-####### Medidas estatisicas para age, absences e G3
+#######################
+# todas as variáveis
+
+# escola
+# idade
+# estudo_semanal
+# aulas_extras_pagas
+# num_faltas
+# nota_final
+#######################
+
+
+# Representação do boxplot
+boxplot(estudantes$idade, col=2, main="Diagrama de extremos e quartis", horizontal=TRUE, xlab="Idade", range=0) #sem outliers
+
+boxplot(estudantes$estudo_semanal, col=2, main="Diagrama de extremos e quartis", horizontal=TRUE, xlab="Estudo semanal", range=0) #sem outliers
+
+boxplot(estudantes$num_faltas, col=2, main="Diagrama de extremos e quartis", horizontal=TRUE, xlab="Número de faltas", range=0) #sem outliers
+
+boxplot(estudantes$nota_final_2, col=2, main="Diagrama de extremos e quartis", horizontal=TRUE, xlab="Nota final", range=0) #sem outliers
+
+
+
+
+
+
+
+
+
+
+
+
+# Medidas estatisicas para idade, nºfaltas e nota final
 
 summary(dados[c("age", "absences", "G3")])
 sd(dados$age)
