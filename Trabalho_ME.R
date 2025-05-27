@@ -336,15 +336,138 @@ axis(side = 1, at=c(0, round(cortes.nota.final,1)))
 #######################
 # todas as variáveis
 
-# escola
-# idade
-# estudo_semanal
-# aulas_extras_pagas
-# num_faltas
-# nota_final
+# escola              -> Qualitativa Nominal
+# idade               -> Quantitativa Contínua
+# estudo_semanal      -> Qualitativa Ordinal
+# aulas_extras_pagas  -> Qualitativa Nominal
+# num_faltas          -> Quantitativa Discreta
+# nota_final          -> Quantitativa Contínua
+#
+#######################
 #######################
 
 
+# Medidas estatísticas por Variável
+ 
+# Quantitativas
+#
+# Moda
+(ni.i)
+if(min(ni.i)==max(ni.i)){
+  print("amodal")
+} else{
+  print(paste("Moda: ", names(ni.i)[ni.i==max(ni.i)]))
+}
+
+(ni.f)
+if(min(ni.f)==max(ni.f)){
+  print("amodal")
+} else{
+  print(paste("Moda: ", names(ni.f)[ni.f==max(ni.f)]))
+}
+
+(ni.n)
+if(min(ni.n)==max(ni.n)){
+  print("amodal")
+} else{
+  print(paste("Moda: ", names(ni.n)[ni.n==max(ni.n)]))
+}
+
+#
+# Mediana
+(median(estudantes$idade))
+
+(median(estudantes$num_faltas))
+
+(median(estudantes$nota_final_2))
+
+#
+# Média
+(mean(estudantes$idade))
+
+(mean(estudantes$num_faltas))
+
+(mean(estudantes$nota_final_2))
+
+#
+# Quartis
+(quantile(estudantes$idade, probs = c(0.25, 0.50, 0.75)))
+
+(quantile(estudantes$num_faltas, probs = c(0.25, 0.50, 0.75)))
+
+(quantile(estudantes$nota_final_2, probs = c(0.25, 0.50, 0.75)))
+round(cumsum(fi.n),4)
+
+#
+# Amplitude total
+(max(estudantes$idade)-min(estudantes$idade))
+
+(max(estudantes$num_faltas)-min(estudantes$num_faltas))
+
+(max(estudantes$nota_final_2)-min(estudantes$nota_final_2))
+
+#
+# Amplitude interquartis
+(IQR(estudantes$idade))
+
+(IQR(estudantes$num_faltas))
+
+(IQR(estudantes$nota_final_2))
+
+#
+# Variância
+(var(estudantes$idade))
+
+(var(estudantes$num_faltas))
+
+(var(estudantes$nota_final_2))
+
+#
+# Desvio padrão
+(sd(estudantes$idade))
+
+(sd(estudantes$num_faltas))
+
+(sd(estudantes$nota_final_2))
+
+#
+# Coeficiente de variação
+(sd(estudantes$idade)/mean(estudantes$idade))*100
+
+(sd(estudantes$num_faltas)/mean(estudantes$num_faltas))*100
+
+(sd(estudantes$nota_final_2)/mean(estudantes$nota_final_2))*100
+
+#
+############
+# Qualitativas (frequências absolutas e relativas feitas anteriormente)
+#
+# Moda
+#
+# escola
+if(min(ni.e)==max(ni.e)){
+  print("amodal")
+} else{
+  print(paste("Moda: ", names(ni.e)[ni.e==max(ni.e)]))
+}
+
+# estudo semanal
+if(min(ni.es)==max(ni.es)){
+  print("amodal")
+} else{
+  print(paste("Moda: ", names(ni.es)[ni.es==max(ni.es)]))
+}
+
+# aulas extra pagas
+if(min(ni.aep)==max(ni.aep)){
+  print("amodal")
+} else{
+  print(paste("Moda: ", names(ni.aep)[ni.aep==max(ni.aep)]))
+}
+
+
+##########################
+##########################
 # Representação do boxplot
 boxplot(estudantes$idade, col=2, main="Diagrama de extremos e quartis", horizontal=TRUE, xlab="Idade", range=0) #sem outliers
 
@@ -355,42 +478,29 @@ boxplot(estudantes$num_faltas, col=2, main="Diagrama de extremos e quartis", hor
 boxplot(estudantes$nota_final_2, col=2, main="Diagrama de extremos e quartis", horizontal=TRUE, xlab="Nota final", range=0) #sem outliers
 
 
+##########################
+##########################
+# Análise da simetria
+#
+# Coeficiente de assimetria
+e1071::skewness(estudantes$idade)
+
+e1071::skewness(estudantes$num_faltas)
+
+e1071::skewness(estudantes$nota_final_2)
+
+
+##########################
+##########################
+# Testes de ajustamento
 
 
 
 
+##########################
+##########################
+# Testes de independência
 
 
 
 
-
-
-# Medidas estatisicas para idade, nºfaltas e nota final
-
-summary(dados[c("age", "absences", "G3")])
-sd(dados$age)
-sd(dados$absences)
-sd(dados$G3)
-
-# Moda (função para calcular)
-moda <- function(x) {
-  ux <- unique(x)
-  ux[which.max(tabulate(match(x, ux)))]
-}
-
-moda(dados$age)
-moda(dados$absences)
-moda(dados$G3)
-
-##### por escola
-aggregate(cbind(age, absences, G3) ~ school, data = dados, 
-          FUN = function(x) c(media = mean(x), mediana = median(x), maximo = max(x)))
-
-##### por aulas extra pagas
-aggregate(cbind(age, absences, G3) ~ paid, data = dados, 
-          FUN = function(x) c(media = mean(x), mediana = median(x), maximo = max(x)))
-
-
-##### por tempo de estudo
-aggregate(cbind(absences, G3) ~ studytime, data = dados, 
-          FUN = function(x) c(media = mean(x), mediana = median(x), maximo = max(x)))
