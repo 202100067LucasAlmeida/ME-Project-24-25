@@ -332,3 +332,20 @@ axis(side = 1, at=c(0, round(cortes.nota.final,1)))
 ##### 3° Fase #####
 ######       ######
 ###################
+
+####### Medidas estatisicas oara age, absences e G3
+
+summary(dados[c("age", "absences", "G3")])
+sd(dados$age)
+sd(dados$absences)
+sd(dados$G3)
+
+# Moda (função para calcular)
+moda <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+
+moda(dados$age)
+moda(dados$absences)
+moda(dados$G3)
