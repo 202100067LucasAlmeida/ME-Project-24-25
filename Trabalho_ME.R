@@ -494,7 +494,41 @@ e1071::skewness(estudantes$nota_final_2)
 ##########################
 # Testes de ajustamento
 
+# Variáveis pros testes:
+#     idade (assimétrica positiva - moderado), 
+#     nº faltas (assimétrica positiva - extremo), 
+#     nota final (assimétrica positiva - ligeira)
 
+# distribuições possíveis
+#     idade -> normal, n>50
+#     nº faltas -> exp, n>50
+#     nota final -> normal, n>50
+
+# testes
+
+# H0: idade ~ N(16.6962,1.276043)
+# H1: idade ~/~ N(16.6962,1.276043)
+# n: 395
+# nível de significância: a=0.05
+library(nortest)
+lillie.test(estudantes$idade)
+# 2.2e-16<0.05 então rejeita-se H0
+
+
+# H0: nºfaltas ~ P(5.708861)
+# H1: nºfaltas ~/~ P(5.708861)
+# n: 395
+# nível de significância: a=0.05
+chisq.test()
+# 0.05 então  H0
+
+
+# H0: nota ~ N(10.81139,3.407479)
+# H1: nota ~/~ N(10.81139,3.407479)
+# n: 395
+# nível de significância: a=0.05
+lillie.test(estudantes$nota_final_2)
+# 0.001671<0.05 então rejeita-se H0
 
 
 ##########################
