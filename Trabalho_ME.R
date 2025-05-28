@@ -519,8 +519,16 @@ lillie.test(estudantes$idade)
 # H1: nºfaltas ~/~ P(5.708861)
 # n: 395
 # nível de significância: a=0.05
-chisq.test()
 # 0.05 então  H0
+lambda <- mean(estudantes$num_faltas)
+obs <- table(estudantes$num_faltas)
+x_vals <- as.integer(names(obs))
+esp <- dpois(x_vals, lambda) * length(estudantes$num_faltas)
+grupo <- ifelse(esp < 5, "outros", as.character(x_vals))
+obs_grouped <- tapply(as.numeric(obs), grupo, sum)
+esp_grouped <- tapply(esp, grupo, sum)
+chisq.test(x = obs_grouped, p = esp_grouped / sum(esp_grouped))
+#conclusão: rejeita se H0
 
 
 # H0: nota ~ N(10.81139,3.407479)
@@ -535,8 +543,12 @@ lillie.test(estudantes$nota_final_2)
 # H1: nota ~/~ U(0,20)
 # n: 395
 # nível de significância: a=0.05
-chisq.test()
 # 0.05 então  H0
+n <- nrow(estudantes)
+obs_nf <- tabela.frequencia.nota_final$ni
+esp_nf <- rep(n / length(obs_nf), length(obs_nf))
+chisq.test(x = obs_nf, p = esp_nf / sum(esp_nf))
+#conclusão: rejeita se H0
 
 
 ##########################
