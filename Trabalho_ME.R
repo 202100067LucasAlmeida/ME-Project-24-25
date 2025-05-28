@@ -531,6 +531,14 @@ lillie.test(estudantes$nota_final_2)
 # 0.001671<0.05 então rejeita-se H0
 
 
+# H0: nota ~ U(0,20)
+# H1: nota ~/~ U(0,20)
+# n: 395
+# nível de significância: a=0.05
+chisq.test()
+# 0.05 então  H0
+
+
 ##########################
 ##########################
 # Testes de independência
