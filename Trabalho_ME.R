@@ -469,6 +469,7 @@ if(min(ni.aep)==max(ni.aep)){
 ##########################
 ##########################
 # Representação do boxplot
+
 boxplot(estudantes$idade, col=2, main="Diagrama de extremos e quartis", horizontal=TRUE, xlab="Idade", range=0) #sem outliers
 
 boxplot(estudantes$estudo_semanal, col=2, main="Diagrama de extremos e quartis", horizontal=TRUE, xlab="Estudo semanal", range=0) #sem outliers
@@ -502,7 +503,7 @@ e1071::skewness(estudantes$nota_final_2)
 # distribuições possíveis
 #     idade -> normal, n>50
 #     nº faltas -> exp, n>50
-#     nota final -> normal, n>50
+#     nota final -> normal ou uniforme, n>50
 
 # testes
 
@@ -515,6 +516,7 @@ lillie.test(estudantes$idade)
 # 2.2e-16<0.05 então rejeita-se H0
 
 
+################
 # H0: nºfaltas ~ P(5.708861)
 # H1: nºfaltas ~/~ P(5.708861)
 # n: 395
@@ -531,6 +533,7 @@ chisq.test(x = obs_grouped, p = esp_grouped / sum(esp_grouped))
 #conclusão: rejeita se H0
 
 
+###############
 # H0: nota ~ N(10.81139,3.407479)
 # H1: nota ~/~ N(10.81139,3.407479)
 # n: 395
@@ -550,11 +553,4 @@ esp_nf <- rep(n / length(obs_nf), length(obs_nf))
 chisq.test(x = obs_nf, p = esp_nf / sum(esp_nf))
 #conclusão: rejeita se H0
 
-
-##########################
-##########################
-# Testes de independência
-
-
-
-
+                                
