@@ -553,7 +553,87 @@ esp_nf <- rep(n / length(obs_nf), length(obs_nf))
 chisq.test(x = obs_nf, p = esp_nf / sum(esp_nf))
 #conclusão: rejeita se H0
 
+<<<<<<< Updated upstream
                        
 #######################################
 #######################################
 ############## FASE 4 #################
+=======
+###############################################################
+###############################################################
+###############################################################
+
+###################
+######       ######
+##### 4° Fase #####
+######       ######
+###################
+
+
+# Regressão Linear
+
+idade=estudantes$idade
+faltas=estudantes$num_faltas
+notas=estudantes$nota_final_2
+
+# Diagrama de dispersão
+plot(x=faltas,
+     y=notas,
+     pch=20,
+     col="blue",
+     xlab="Num faltas",
+     ylab="Nota final",
+     main="Diagrama de dispersão")
+
+# Coeficiente de correlação linear de Pearson
+cor(x=faltas,y=notas)
+
+modelo <- lm(formula = notas~faltas)
+
+b <- modelo$coefficients[2]
+a <- modelo$coefficients[1]
+
+# Reta de regressão linear
+
+plot(x=faltas,
+     y=notas,
+     pch=20,
+     col="blue",
+     xlab="Num faltas",
+     ylab="Nota final",
+     main="Diagrama de dispersão",
+     abline(a=a,b=b,col="red"))
+
+# Residuos
+residuos <- modelo$residuals
+sum(residuos)
+
+plot(x=faltas,
+     y=residuos,
+     pch=20,
+     col="blue",
+     xlab="Num faltas",
+     ylab="Residuos",
+     main="Gráficos de residuos",
+     abline(h=0))
+
+# Conclusões:
+# Pelo diagrama de Dispersão conclui-se que não existe associação linear entre o número de faltas
+# e a nota final dos alunos, sua correlação linear é muito fraca, praticamente nula.
+
+# Pela análise dos resíduos, conclui-se que o modelo ajustado não é bom.
+
+# Previsões:
+# Nota final de um aluno que falta 10 vezes e quando falta 70
+# y(10) ~ 11
+y1 <- a - b*10
+
+# y(70) ~ 12
+y2 <- a - b*70
+
+# Como não há correlação, não há possibilidade de fazer previsões da nota final com base no 
+# número de faltas.
+
+# Outliers: outliers não influentes. Apesar de haver observações muito destacadas, não
+# alteram o modelo linear ajustado.
+>>>>>>> Stashed changes
