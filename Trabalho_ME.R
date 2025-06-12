@@ -553,4 +553,7 @@ esp_nf <- rep(n / length(obs_nf), length(obs_nf))
 chisq.test(x = obs_nf, p = esp_nf / sum(esp_nf))
 #conclusão: rejeita se H0
 
-                                
+                       
+#######################################
+#######################################
+############## FASE 4 #################
