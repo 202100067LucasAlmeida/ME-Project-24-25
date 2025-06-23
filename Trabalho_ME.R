@@ -553,15 +553,6 @@ esp_nf <- rep(n / length(obs_nf), length(obs_nf))
 chisq.test(x = obs_nf, p = esp_nf / sum(esp_nf))
 #conclusão: rejeita se H0
 
-<<<<<<< Updated upstream
-                       
-#######################################
-#######################################
-############## FASE 4 #################
-=======
-###############################################################
-###############################################################
-###############################################################
 
 ###################
 ######       ######
@@ -636,4 +627,3 @@ y2 <- a - b*70
 
 # Outliers: outliers não influentes. Apesar de haver observações muito destacadas, não
 # alteram o modelo linear ajustado.
->>>>>>> Stashed changes
