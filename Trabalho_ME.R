@@ -327,26 +327,155 @@ axis(side = 1, at=c(0, round(cortes.nota.final,1)))
 ###############################################################
 ###############################################################
 
-###################
-######       ######
-##### 3° Fase #####
-######       ######
-###################
+#################################
+#########                 #######
+##### 3° Fase - refactoring #####
+#########                 #######
+#################################
 
 #######################
 # todas as variáveis
 
 # escola              -> Qualitativa Nominal
-# idade               -> Quantitativa Contínua
 # estudo_semanal      -> Qualitativa Ordinal
 # aulas_extras_pagas  -> Qualitativa Nominal
-# num_faltas          -> Quantitativa Discreta
-# nota_final          -> Quantitativa Contínua
+
 #
 #######################
 #######################
 
+# DEFINIR AS HIPÓTESES
 
+# nº de faltas - Quantitativa Discreta
+# H0: o nº de faltas segue uma distribuíção Binomial Negativa
+# H1: o nº de faltas NÃO segue uma distribuíção Binomial Negativa
+
+
+# nota_final - Quantitativa Contínua
+# H0: a nota final segue uma distribuíção Normal
+# H1: a nota final NÃO segue uma distribuíção Normal
+
+
+# idade - Quantitativa Contínua
+# H0: a idade segue uma distribuíção Qui-Quadrado
+# H1: a idade NÃO segue uma distribuíção Qui-Quadrado
+
+
+# idade - Quantitativa Contínua
+# H0: a idade segue uma distribuíção Binomial Negativa
+# H1: a idade NÃO segue uma distribuíção Binomial Negativa
+
+
+#######################
+#######################
+
+# ESTATISTICA DE TESTE (α=0.05)
+nrow(estudantes)
+
+# nº de faltas - qui-quadrado
+# 
+
+
+# nota_final - Lilliefors
+library(nortest)
+teste_nota_final <- lillie.test(estudantes$nota_final_2)
+teste_nota_final$statistic  # Estatística D observada
+
+
+# idade - qui-quadrado
+# 
+
+
+# idade - qui-quadrado
+# 
+
+
+#######################
+#######################
+
+# REGIÕES DE ACEITAÇÃO E REJEIÇÃO
+
+# nº de faltas
+# RA:
+# RC:
+
+
+# nota_final
+# RA: -
+# RC: -
+
+
+# idade
+# RA:
+# RC:
+
+
+#######################
+#######################
+
+# P-VALUE
+
+# nº de faltas
+# p-value:
+
+
+# nota_final
+# p-value: 0.001670715
+teste_nota_final$p.value    # Valor-p
+
+
+# idade
+# p-value:
+
+
+#######################
+#######################
+
+# DECISÃO
+
+# nº de faltas - 
+# 
+
+
+# nota_final
+# rejeitar H0 - a nota final não segue uma distribuíção normal
+alpha <- 0.05
+if(teste_nota_final$p.value <= alpha) {
+  print("Rejeitar H0: os dados não são normais")
+} else {
+  print("Não rejeitar H0: os dados podem ser normais")
+}
+
+
+# idade - 
+# 
+
+
+#######################
+#######################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#######################
+#######################
 # Medidas estatísticas por Variável
  
 # Quantitativas
@@ -437,33 +566,6 @@ round(cumsum(fi.n),4)
 (sd(estudantes$num_faltas)/mean(estudantes$num_faltas))*100
 
 (sd(estudantes$nota_final_2)/mean(estudantes$nota_final_2))*100
-
-#
-############
-# Qualitativas (frequências absolutas e relativas feitas anteriormente)
-#
-# Moda
-#
-# escola
-if(min(ni.e)==max(ni.e)){
-  print("amodal")
-} else{
-  print(paste("Moda: ", names(ni.e)[ni.e==max(ni.e)]))
-}
-
-# estudo semanal
-if(min(ni.es)==max(ni.es)){
-  print("amodal")
-} else{
-  print(paste("Moda: ", names(ni.es)[ni.es==max(ni.es)]))
-}
-
-# aulas extra pagas
-if(min(ni.aep)==max(ni.aep)){
-  print("amodal")
-} else{
-  print(paste("Moda: ", names(ni.aep)[ni.aep==max(ni.aep)]))
-}
 
 
 ##########################
