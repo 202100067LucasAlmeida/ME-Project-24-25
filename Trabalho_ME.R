@@ -373,41 +373,24 @@ axis(side = 1, at=c(0, round(cortes.nota.final,1)))
 nrow(estudantes)
 
 # nº de faltas - qui-quadrado
-# 
+teste_nfaltas <- 
+teste_nfaltas$statistic
 
 
 # nota_final - Lilliefors
 library(nortest)
 teste_nota_final <- lillie.test(estudantes$nota_final_2)
-teste_nota_final$statistic  # Estatística D observada
+teste_nota_final$statistic
 
 
 # idade - qui-quadrado
-# 
+teste1_idade <- 
+teste1_idade$statistic
 
 
 # idade - qui-quadrado
-# 
-
-
-#######################
-#######################
-
-# REGIÕES DE ACEITAÇÃO E REJEIÇÃO
-
-# nº de faltas
-# RA:
-# RC:
-
-
-# nota_final
-# RA: -
-# RC: -
-
-
-# idade
-# RA:
-# RC:
+teste2_idade <- 
+teste2_idade$statistic
 
 
 #######################
@@ -417,15 +400,22 @@ teste_nota_final$statistic  # Estatística D observada
 
 # nº de faltas
 # p-value:
+teste_nfaltas$p.value
 
 
 # nota_final
 # p-value: 0.001670715
-teste_nota_final$p.value    # Valor-p
+teste_nota_final$p.value
 
 
 # idade
 # p-value:
+teste1_idade$p.value
+
+
+# idade
+# p-value:
+teste2_idade$p.value
 
 
 #######################
@@ -435,6 +425,12 @@ teste_nota_final$p.value    # Valor-p
 
 # nº de faltas - 
 # 
+alpha <- 0.05
+if(teste_nfaltas$p.value <= alpha) {
+  print("Rejeitar H0: os dados não são binomais negativos")
+} else {
+  print("Não rejeitar H0: os dados podem ser binomais negativos")
+}
 
 
 # nota_final
@@ -449,211 +445,22 @@ if(teste_nota_final$p.value <= alpha) {
 
 # idade - 
 # 
-
-
-#######################
-#######################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#######################
-#######################
-# Medidas estatísticas por Variável
- 
-# Quantitativas
-#
-# Moda
-(ni.i)
-if(min(ni.i)==max(ni.i)){
-  print("amodal")
-} else{
-  print(paste("Moda: ", names(ni.i)[ni.i==max(ni.i)]))
+alpha <- 0.05
+if(teste1_idade$p.value <= alpha) {
+  print("Rejeitar H0: os dados não são binomais negativos")
+} else {
+  print("Não rejeitar H0: os dados podem ser binomais negativos")
 }
 
-(ni.f)
-if(min(ni.f)==max(ni.f)){
-  print("amodal")
-} else{
-  print(paste("Moda: ", names(ni.f)[ni.f==max(ni.f)]))
+
+# idade - 
+# 
+alpha <- 0.05
+if(teste2_idade$p.value <= alpha) {
+  print("Rejeitar H0: os dados não são qui-quadrado")
+} else {
+  print("Não rejeitar H0: os dados podem ser qui-quadrado")
 }
-
-(ni.n)
-if(min(ni.n)==max(ni.n)){
-  print("amodal")
-} else{
-  print(paste("Moda: ", names(ni.n)[ni.n==max(ni.n)]))
-}
-
-#
-# Mediana
-(median(estudantes$idade))
-
-(median(estudantes$num_faltas))
-
-(median(estudantes$nota_final_2))
-
-#
-# Média
-(mean(estudantes$idade))
-
-(mean(estudantes$num_faltas))
-
-(mean(estudantes$nota_final_2))
-
-#
-# Quartis
-(quantile(estudantes$idade, probs = c(0.25, 0.50, 0.75)))
-
-(quantile(estudantes$num_faltas, probs = c(0.25, 0.50, 0.75)))
-
-(quantile(estudantes$nota_final_2, probs = c(0.25, 0.50, 0.75)))
-round(cumsum(fi.n),4)
-
-#
-# Amplitude total
-(max(estudantes$idade)-min(estudantes$idade))
-
-(max(estudantes$num_faltas)-min(estudantes$num_faltas))
-
-(max(estudantes$nota_final_2)-min(estudantes$nota_final_2))
-
-#
-# Amplitude interquartis
-(IQR(estudantes$idade))
-
-(IQR(estudantes$num_faltas))
-
-(IQR(estudantes$nota_final_2))
-
-#
-# Variância
-(var(estudantes$idade))
-
-(var(estudantes$num_faltas))
-
-(var(estudantes$nota_final_2))
-
-#
-# Desvio padrão
-(sd(estudantes$idade))
-
-(sd(estudantes$num_faltas))
-
-(sd(estudantes$nota_final_2))
-
-#
-# Coeficiente de variação
-(sd(estudantes$idade)/mean(estudantes$idade))*100
-
-(sd(estudantes$num_faltas)/mean(estudantes$num_faltas))*100
-
-(sd(estudantes$nota_final_2)/mean(estudantes$nota_final_2))*100
-
-
-##########################
-##########################
-# Representação do boxplot
-
-boxplot(estudantes$idade, col=2, main="Diagrama de extremos e quartis", horizontal=TRUE, xlab="Idade", range=0) #sem outliers
-
-boxplot(estudantes$estudo_semanal, col=2, main="Diagrama de extremos e quartis", horizontal=TRUE, xlab="Estudo semanal", range=0) #sem outliers
-
-boxplot(estudantes$num_faltas, col=2, main="Diagrama de extremos e quartis", horizontal=TRUE, xlab="Número de faltas", range=0) #sem outliers
-
-boxplot(estudantes$nota_final_2, col=2, main="Diagrama de extremos e quartis", horizontal=TRUE, xlab="Nota final", range=0) #sem outliers
-
-
-##########################
-##########################
-# Análise da simetria
-#
-# Coeficiente de assimetria
-e1071::skewness(estudantes$idade)
-
-e1071::skewness(estudantes$num_faltas)
-
-e1071::skewness(estudantes$nota_final_2)
-
-
-##########################
-##########################
-# Testes de ajustamento
-
-# Variáveis pros testes:
-#     idade (assimétrica positiva - moderado), 
-#     nº faltas (assimétrica positiva - extremo), 
-#     nota final (assimétrica positiva - ligeira)
-
-# distribuições possíveis
-#     idade -> normal, n>50
-#     nº faltas -> exp, n>50
-#     nota final -> normal ou uniforme, n>50
-
-# testes
-
-# H0: idade ~ N(16.6962,1.276043)
-# H1: idade ~/~ N(16.6962,1.276043)
-# n: 395
-# nível de significância: a=0.05
-library(nortest)
-lillie.test(estudantes$idade)
-# 2.2e-16<0.05 então rejeita-se H0
-
-
-################
-# H0: nºfaltas ~ P(5.708861)
-# H1: nºfaltas ~/~ P(5.708861)
-# n: 395
-# nível de significância: a=0.05
-# 0.05 então  H0
-lambda <- mean(estudantes$num_faltas)
-obs <- table(estudantes$num_faltas)
-x_vals <- as.integer(names(obs))
-esp <- dpois(x_vals, lambda) * length(estudantes$num_faltas)
-grupo <- ifelse(esp < 5, "outros", as.character(x_vals))
-obs_grouped <- tapply(as.numeric(obs), grupo, sum)
-esp_grouped <- tapply(esp, grupo, sum)
-chisq.test(x = obs_grouped, p = esp_grouped / sum(esp_grouped))
-#conclusão: rejeita se H0
-
-
-###############
-# H0: nota ~ N(10.81139,3.407479)
-# H1: nota ~/~ N(10.81139,3.407479)
-# n: 395
-# nível de significância: a=0.05
-lillie.test(estudantes$nota_final_2)
-# 0.001671<0.05 então rejeita-se H0
-
-
-# H0: nota ~ U(0,20)
-# H1: nota ~/~ U(0,20)
-# n: 395
-# nível de significância: a=0.05
-# 0.05 então  H0
-n <- nrow(estudantes)
-obs_nf <- tabela.frequencia.nota_final$ni
-esp_nf <- rep(n / length(obs_nf), length(obs_nf))
-chisq.test(x = obs_nf, p = esp_nf / sum(esp_nf))
-#conclusão: rejeita se H0
 
 
 ###################
