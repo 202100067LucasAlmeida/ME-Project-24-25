@@ -383,24 +383,24 @@ r_est <- media_faltas^2 / (variancia_faltas - media_faltas)
 (Oi2_faltas = table(classes2_faltas))
 sum(Oi2_faltas)
 
-pi_faltas <- c(
+(pi_faltas <- c(
   pnbinom(8.33, size = r_est, prob = p_est),
   pnbinom(16.7, size = r_est, prob = p_est) - pnbinom(8.33, size = r_est, prob = p_est),
   pnbinom(25, size = r_est, prob = p_est) - pnbinom(16.7, size = r_est, prob = p_est),
   pnbinom(33.3, size = r_est, prob = p_est) - pnbinom(25, size = r_est, prob = p_est),
   1 - pnbinom(33.3, size = r_est, prob = p_est)
-)
+))
 sum(pi_faltas) # tem de dar 1
 
 (teste_nfaltas = chisq.test(x=Oi2_faltas,p=pi_faltas))
 
-
+#######################
 # nota_final - Lilliefors
 library(nortest)
 teste_nota_final <- lillie.test(estudantes$nota_final_2)
 teste_nota_final$statistic
 
-
+#######################
 # idade - qui-quadrado
 (min(estudantes$idade)) # Verificar o min dos dados
 (max(estudantes$idade)) # Verificar o max dos dados
@@ -427,19 +427,19 @@ sum(Oi_idade)
 (Oi2_idade = table(classes2_idade))
 sum(Oi2_idade)
 
-pchisq(16.4,n)-pchisq(15,n)
-pchisq(17.8,n)-pchisq(16.4,n)
-pchisq(19.2,n)-pchisq(17.8,n)
-pchisq(22,n)-pchisq(19.2,n)
+media_idade <- mean(estudantes$idade)
 
-(pi_idade <- c())
+(k_est <- media_idade)
+
+(pi_idade <- c(
+  pchisq(16.4, df = k_est) ,
+  pchisq(17.8, df = k_est) - pchisq(16.4, df = k_est),
+  pchisq(19.2, df = k_est) - pchisq(17.8, df = k_est),
+  1- pchisq(19.2, df = k_est)
+))
 sum(pi_idade) # tem de dar 1
 
-(teste_idade = chisq.test(x=Oi_idade,p=pi_idade))
-teste_idade$statistic
-
-gl_idade = k_idade-1-
-qchisq(0.95,gl_idade) #RC [, +...[
+(teste_idade = chisq.test(x=Oi2_idade,p=pi_idade))
 
 
 #######################
@@ -448,10 +448,10 @@ qchisq(0.95,gl_idade) #RC [, +...[
 # P-VALUE
 
 # nº de faltas
-# p-value (ajustado): 0.6518869 
-gl_faltas = k_faltas-1-2
+# p-value (ajustado): 0.1234834
+gl_faltas = 5-1-2
 (pvalue_faltas <- 1 - pchisq(teste_nfaltas$statistic, gl_faltas))
-qchisq(0.95,gl_faltas) #RC [, +...[
+qchisq(0.95,gl_faltas) #RC [5.991465, +...[ com Xobs=4.1833
 
 
 # nota_final
@@ -460,8 +460,10 @@ teste_nota_final$p.value
 
 
 # idade
-# p-value (ajustado):
-teste_idade$p.value
+# p-value (ajustado): 0
+gl_idade = 4-1-1
+(pvalue_idade <- 1 - pchisq(teste_idade$statistic, gl_idade))
+qchisq(0.95,gl_idade) #RC [5.991465, +...[ com Xobs=378.13
 
 
 #######################
@@ -489,8 +491,7 @@ if(teste_nota_final$p.value <= alpha) {
 
 
 # idade
-# 
-alpha <- 0.05
+# rejeitar H0 - a idade não segue uma distribuíção qui-quadrado
 if(teste_idade$p.value <= alpha) {
   print("Rejeitar H0: os dados não são qui-quadrado")
 } else {
