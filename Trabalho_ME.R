@@ -165,9 +165,9 @@ tabela.frequencia.aulas_extras_pagas <- data.frame(i = 1:length(ni.aep),
 
 # Variável: idade
 ni.i = table(estudantes$idade)
-fi.i = prop.table(ni.id)
-Ni.i = cumsum(ni.id)
-Fi.i = round(cumsum(fi.id), 4)
+fi.i = prop.table(ni.i)
+Ni.i = cumsum(ni.i)
+Fi.i = round(cumsum(fi.i), 4)
 
 tabela.frequencia.idade <- data.frame(i=c(1:length(ni.i)),
                                    xi = names(ni.i),
@@ -361,11 +361,6 @@ axis(side = 1, at=c(0, round(cortes.nota.final,1)))
 # H1: a idade NÃO segue uma distribuíção Qui-Quadrado
 
 
-# idade - Quantitativa Contínua
-# H0: a idade segue uma distribuíção Binomial Negativa
-# H1: a idade NÃO segue uma distribuíção Binomial Negativa
-
-
 #######################
 #######################
 
@@ -373,8 +368,31 @@ axis(side = 1, at=c(0, round(cortes.nota.final,1)))
 nrow(estudantes)
 
 # nº de faltas - qui-quadrado
-teste_nfaltas <- 
-teste_nfaltas$statistic
+media_faltas <- mean(estudantes$num_faltas)
+variancia_faltas <- var(estudantes$num_faltas)
+
+p_est <- media_faltas / variancia_faltas
+r_est <- media_faltas^2 / (variancia_faltas - media_faltas)
+
+(Oi_faltas <- table(classes_faltas))
+
+(cortes2_faltas = c(cortes.faltas[1:5], cortes.faltas[9+1]))
+(classes2_faltas = cut(estudantes$num_faltas, breaks=cortes2_faltas, right=TRUE, 
+                         include.lowest=TRUE, dig.lab = 3))
+
+(Oi2_faltas = table(classes2_faltas))
+sum(Oi2_faltas)
+
+pi_faltas <- c(
+  pnbinom(8.33, size = r_est, prob = p_est),
+  pnbinom(16.7, size = r_est, prob = p_est) - pnbinom(8.33, size = r_est, prob = p_est),
+  pnbinom(25, size = r_est, prob = p_est) - pnbinom(16.7, size = r_est, prob = p_est),
+  pnbinom(33.3, size = r_est, prob = p_est) - pnbinom(25, size = r_est, prob = p_est),
+  1 - pnbinom(33.3, size = r_est, prob = p_est)
+)
+sum(pi_faltas) # tem de dar 1
+
+(teste_nfaltas = chisq.test(x=Oi2_faltas,p=pi_faltas))
 
 
 # nota_final - Lilliefors
@@ -384,13 +402,44 @@ teste_nota_final$statistic
 
 
 # idade - qui-quadrado
-teste1_idade <- 
-teste1_idade$statistic
+(min(estudantes$idade)) # Verificar o min dos dados
+(max(estudantes$idade)) # Verificar o max dos dados
 
+(k.i = 5)
+(h.i = (max(estudantes$idade)-min(estudantes$idade))/k.i)
+(min.classe.i = min(estudantes$idade))
+(max.classe.i = min.classe.i + h.i * k.i)
 
-# idade - qui-quadrado
-teste2_idade <- 
-teste2_idade$statistic
+cortes.idade = seq(min.classe.i, max.classe.i, by = h.i)
+
+classes_idade <- cut(estudantes$idade,
+                          breaks = cortes.idade,
+                          right = FALSE, 
+                          include.lowest = TRUE) 
+
+(Oi_idade = table(classes_idade))
+sum(Oi_idade)
+
+(cortes2_idade = c(cortes.idade[1:4], cortes.idade[5+1]))
+(classes2_idade = cut(estudantes$idade, breaks=cortes2_idade, right=TRUE, 
+                       include.lowest=TRUE, dig.lab = 3))
+
+(Oi2_idade = table(classes2_idade))
+sum(Oi2_idade)
+
+pchisq(16.4,n)-pchisq(15,n)
+pchisq(17.8,n)-pchisq(16.4,n)
+pchisq(19.2,n)-pchisq(17.8,n)
+pchisq(22,n)-pchisq(19.2,n)
+
+(pi_idade <- c())
+sum(pi_idade) # tem de dar 1
+
+(teste_idade = chisq.test(x=Oi_idade,p=pi_idade))
+teste_idade$statistic
+
+gl_idade = k_idade-1-
+qchisq(0.95,gl_idade) #RC [, +...[
 
 
 #######################
@@ -399,8 +448,10 @@ teste2_idade$statistic
 # P-VALUE
 
 # nº de faltas
-# p-value:
-teste_nfaltas$p.value
+# p-value (ajustado): 0.6518869 
+gl_faltas = k_faltas-1-2
+(pvalue_faltas <- 1 - pchisq(teste_nfaltas$statistic, gl_faltas))
+qchisq(0.95,gl_faltas) #RC [, +...[
 
 
 # nota_final
@@ -409,23 +460,18 @@ teste_nota_final$p.value
 
 
 # idade
-# p-value:
-teste1_idade$p.value
-
-
-# idade
-# p-value:
-teste2_idade$p.value
+# p-value (ajustado):
+teste_idade$p.value
 
 
 #######################
 #######################
 
 # DECISÃO
-
-# nº de faltas - 
-# 
 alpha <- 0.05
+
+# nº de faltas
+# não rejeitar H0 - o nºfaltas segue uma distribuição binomial negativa
 if(teste_nfaltas$p.value <= alpha) {
   print("Rejeitar H0: os dados não são binomais negativos")
 } else {
@@ -435,7 +481,6 @@ if(teste_nfaltas$p.value <= alpha) {
 
 # nota_final
 # rejeitar H0 - a nota final não segue uma distribuíção normal
-alpha <- 0.05
 if(teste_nota_final$p.value <= alpha) {
   print("Rejeitar H0: os dados não são normais")
 } else {
@@ -443,20 +488,10 @@ if(teste_nota_final$p.value <= alpha) {
 }
 
 
-# idade - 
+# idade
 # 
 alpha <- 0.05
-if(teste1_idade$p.value <= alpha) {
-  print("Rejeitar H0: os dados não são binomais negativos")
-} else {
-  print("Não rejeitar H0: os dados podem ser binomais negativos")
-}
-
-
-# idade - 
-# 
-alpha <- 0.05
-if(teste2_idade$p.value <= alpha) {
+if(teste_idade$p.value <= alpha) {
   print("Rejeitar H0: os dados não são qui-quadrado")
 } else {
   print("Não rejeitar H0: os dados podem ser qui-quadrado")
