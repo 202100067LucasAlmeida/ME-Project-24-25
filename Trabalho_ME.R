@@ -498,6 +498,9 @@ if(teste_idade$p.value <= alpha) {
   print("Não rejeitar H0: os dados podem ser qui-quadrado")
 }
 
+###############################################################
+###############################################################
+###############################################################
 
 ###################
 ######       ######
@@ -505,6 +508,61 @@ if(teste_idade$p.value <= alpha) {
 ######       ######
 ###################
 
+# Testes de independência
+
+# Aulas extras pagas vs horas de estudo semanais
+
+horas_por_semana <- c("1" = "Menos que 2h",
+                      "2" = "Entre 2 e 5h",
+                      "3" = "Entre 5 e 10h",
+                      "4" = "Mais que 10h")
+estudantes$estudo_semanal_descricao <- horas_por_semana[as.character(estudantes$estudo_semanal)]
+
+# Tabela de contingencia
+estudantes$estudo_semanal_descricao <- factor(estudantes$estudo_semanal_descricao, 
+                                              levels = c("Menos que 2h", 
+                                                         "Entre 2 e 5h",
+                                                         "Entre 5 e 10h",
+                                                         "Mais que 10h"))
+tabela.contingencia <- table(estudantes$aulas_extras_pagas, estudantes$estudo_semanal_descricao)
+(tabela.contingencia)
+
+# Hipóteses:
+# H0: Aulas extras pagas não influenciam nas horas de estudo semanais (são independentes)
+# H1: Aulas extras pagas influenciam nas horas de estudo semanais (não são independentes)
+
+# Teste a um nível de significância de 5%:
+chisq.test(tabela.contingencia)
+
+# Como nosso p-value (0.0023) é menor que alpha (0.05) podemos concluir que as variáveis
+# não são independentes, logo, os alunos terem aulas extras pagas influencia nas horas 
+# gastas para estudo por semana.
+
+# Verificação extra: Pela região crítica
+
+qchisq(0.95,3) # X²1-alpha;(r-1)*(c-1) => X²1-0.05;(2-1)*(4-1) => X²0.95;3
+
+# RC = [7.8147, +∞[
+
+# Nosso Qobs = 14.418 que pertence a nossa Região Crítica, fortalece mais a conclusão de que 
+# as varíaveis não são independentes.
+
+# Medidas de associação
+library(DescTools)
+ContCoef(tabela.contingencia) # 0.1876
+CramerV(tabela.contingencia) # 0.1910
+
+# Conclusão:
+# Embora o teste do qui-quadrado tenha indicado dependência estatisticamente significativa 
+# entre as variáveis "aulas extras pagas" e "horas de estudo semanais", as medidas de 
+# associação (Coeficiente de contingencia = 0.1876 e V de Cramér = 0.1910) revelam que essa relação 
+# é fraca.
+# Em termos práticos, isso significa que, apesar de existir uma associação entre pagar aulas 
+# extras e o tempo semanal dedicado ao estudo, essa influência é pouco expressiva. Outros 
+# fatores provavelmente exercem um papel mais relevante no hábito de estudo dos alunos.
+
+##############################
+##############################
 
 # Regressão Linear
 
