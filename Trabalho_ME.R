@@ -255,7 +255,7 @@ legend("topleft",
 # Tipo de gráfico: barras
 
 barplot(ni.es, 
-        xlab="Horas", 
+        xlab="Horas por nível", 
         ylab="Frequências absolutas", 
         main="Classificação do estudo semanal",
         col=c("red", "yellow", "blue", "green"), 
@@ -344,6 +344,15 @@ axis(side = 1, at=c(0, round(cortes.nota.final,1)))
 #######################
 #######################
 
+
+# Coeficiente de assimetria
+e1071::skewness(estudantes$idade)
+
+e1071::skewness(estudantes$num_faltas)
+
+e1071::skewness(estudantes$nota_final_2)
+
+
 # DEFINIR AS HIPÓTESES
 
 # nº de faltas - Quantitativa Discreta
@@ -417,7 +426,7 @@ classes_idade <- cut(estudantes$idade,
                           right = FALSE, 
                           include.lowest = TRUE) 
 
-(Oi_idade = table(classes_idade))
+(Oi_idade = table(estudantes$idade))
 sum(Oi_idade)
 
 (cortes2_idade = c(cortes.idade[1:4], cortes.idade[5+1]))
