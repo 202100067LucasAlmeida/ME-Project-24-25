@@ -630,9 +630,12 @@ plot(x=faltas,
 # Nota final de um aluno que falta 10 vezes e quando falta 70
 # y(10) ~ 11
 y1 <- a - b*10
+y1
 
 # y(70) ~ 12
 y2 <- a - b*70
+y2
+
 
 # Como não há correlação, não há possibilidade de fazer previsões da nota final com base no 
 # número de faltas.
